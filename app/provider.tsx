@@ -1,14 +1,10 @@
-'use client'
+'use client';
 
-import { HeroUIProvider } from '@heroui/react'
-import React from 'react'
+import { HeroUIProvider } from '@heroui/react';
+import React from 'react';
 
-const Provider = ({ children }:{children: React.ReactNode}) => {
-  return (
-    <HeroUIProvider>
-      {children}
-    </HeroUIProvider>
-  )
-}
+const Provider = ({ children }: { children: React.ReactNode }) => {
+  return <HeroUIProvider>{children}</HeroUIProvider>;
+};
 
-export default Provider
+export default Provider;
