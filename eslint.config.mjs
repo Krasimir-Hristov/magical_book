@@ -11,6 +11,11 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    rules: {
+      semi: ["error", "always"], // Задава правило за точка и запетая
+    },
+  },
 ];
 
 export default eslintConfig;
