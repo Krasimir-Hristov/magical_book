@@ -12,7 +12,7 @@ const Hero = () => {
             Craft Magical Stories for Kids in Minutes
           </h2>
           <p className='text-2xl text-primary font-light'>
-            Create fun and personalized stories that bring your child's
+            Create fun and personalized stories that bring your child&apos;s
             adventures to life and spark their passion for reading. It only
             takes a few seconds!
           </p>
