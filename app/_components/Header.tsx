@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+
 import {
   Navbar,
   NavbarBrand,
@@ -9,9 +10,9 @@ import {
   NavbarMenuItem,
 } from '@heroui/navbar';
 import Image from 'next/image';
-import path from 'path';
 import Link from 'next/link';
 import { Button } from '@heroui/button';
+import { useState } from 'react';
 
 const Header = () => {
   const MenuList = [
@@ -32,16 +33,21 @@ const Header = () => {
       path: '/contact-us',
     },
   ];
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <Navbar maxWidth='full'>
+    <Navbar maxWidth='full' onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
+        <NavbarMenuToggle
+          className='sm:hidden'
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+        />
         <NavbarBrand>
           <Image src={'/logo.svg'} alt='logo' width={40} height={40} />
           <h2 className='font-bold text-2xl text-primary ml-3'>Magical Book</h2>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent justify='center'>
+      <NavbarContent justify='center' className='hidden sm:flex'>
         {MenuList.map((item, index) => (
           <NavbarItem
             key={index}
@@ -55,6 +61,14 @@ const Header = () => {
       <NavbarContent justify='end'>
         <Button color='primary'>Get Started</Button>
       </NavbarContent>
+
+      <NavbarMenu>
+        {MenuList.map((item, index) => (
+          <NavbarMenuItem key={index}>
+            <Link href={item.path}>{item.name}</Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
     </Navbar>
   );
 };
