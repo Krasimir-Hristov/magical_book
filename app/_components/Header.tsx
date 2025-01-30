@@ -16,7 +16,7 @@ import { useState } from 'react';
 import { UserButton, useUser } from '@clerk/nextjs';
 
 const Header = () => {
-  const { user, isSignedIn } = useUser();
+  const { isSignedIn } = useUser();
 
   const MenuList = [
     {
