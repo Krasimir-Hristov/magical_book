@@ -7,6 +7,7 @@ import StoryType from './_components/StoryType';
 export interface fieldData {
   fieldName: string;
   fieldValue: string;
+  isFree?: boolean;
 }
 const CreateStory = () => {
   const onHandleUserSelection = (data: fieldData) => {
