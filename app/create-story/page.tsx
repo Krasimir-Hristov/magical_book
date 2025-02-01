@@ -2,6 +2,7 @@
 
 import React, { use } from 'react';
 import StorySubjectInput from './_components/StorySubjectInput';
+import StoryType from './_components/StoryType';
 
 export interface fieldData {
   fieldName: string;
@@ -26,7 +27,7 @@ const CreateStory = () => {
         {/* Story Subject */}
         <StorySubjectInput userSelection={onHandleUserSelection} />
         {/* Story Type */}
-
+        <StoryType />
         {/* Age Group */}
 
         {/* Image Style */}
