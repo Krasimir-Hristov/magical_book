@@ -6,13 +6,13 @@ import StoryType from './_components/StoryType';
 import AgeGroup from './_components/AgeGroup';
 import ImageStyle from './_components/ImageStyle';
 
-export interface fieldData {
+export interface FieldData {
   fieldName: string;
   fieldValue: string;
   isFree?: boolean;
 }
 const CreateStory = () => {
-  const onHandleUserSelection = (data: fieldData) => {
+  const onHandleUserSelection = (data: FieldData) => {
     console.log(data);
   };
 
@@ -30,11 +30,11 @@ const CreateStory = () => {
         {/* Story Subject */}
         <StorySubjectInput userSelection={onHandleUserSelection} />
         {/* Story Type */}
-        <StoryType />
+        <StoryType userSelection={onHandleUserSelection} />
         {/* Age Group */}
-        <AgeGroup />
+        <AgeGroup userSelection={onHandleUserSelection} />
         {/* Image Style */}
-        <ImageStyle />
+        <ImageStyle userSelection={onHandleUserSelection} />
       </div>
     </div>
   );

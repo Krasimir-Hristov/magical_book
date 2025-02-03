@@ -1,10 +1,9 @@
 import { Textarea } from '@heroui/input';
 import React from 'react';
-import { fieldData } from '../page';
-// коригирай пътя според структурата на проекта
+import { FieldData } from '../page';
 
 interface StorySubjectInputProps {
-  userSelection: (data: fieldData) => void;
+  userSelection: (data: FieldData) => void;
 }
 
 const StorySubjectInput: React.FC<StorySubjectInputProps> = ({
