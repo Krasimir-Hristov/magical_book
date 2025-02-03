@@ -1,12 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
+import uuid4 from 'uuid4';
 import StorySubjectInput from './_components/StorySubjectInput';
 import StoryType from './_components/StoryType';
 import AgeGroup from './_components/AgeGroup';
 import ImageStyle from './_components/ImageStyle';
 import { Button } from '@heroui/button';
 import { chatSession } from '@/config/GeminiAi';
+import { db } from '@/config/db';
+import { StoryData } from '@/config/schema';
 
 // Load the prompt template from environment variables
 const AI_CREATE_STORY_PROMPT = process.env.NEXT_PUBLIC_CREATE_STORY_PROMPT;
@@ -25,7 +28,7 @@ export interface FormDataType {
 
 const CreateStory = () => {
   const [formData, setFormData] = useState<FormDataType>({});
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const onHandleUserSelection = (data: FieldData) => {
     setFormData((prev) => ({
@@ -61,10 +64,38 @@ const CreateStory = () => {
       // Send the prompt to the AI (Gemini AI in this case)
       const result = await chatSession.sendMessage(FINAL_PROMPT);
       console.log('AI Response:', result?.response.text());
+      const response = await saveInDB(result?.response.text());
+      console.log(response);
+
       setLoading(false);
     } catch (e) {
       setLoading(false);
       console.error('Error generating story:', e);
+    }
+  };
+
+  const saveInDB = async (output: string) => {
+    const recordId = uuid4();
+
+    setLoading(true);
+    // Save the generated story in the database
+    try {
+      const result = await db
+        .insert(StoryData)
+        .values({
+          storyId: recordId,
+          ageGroup: formData?.ageGroup,
+          imageStyle: formData?.imageStyle,
+          storySubject: formData?.storySubject,
+          storyType: formData?.storyType,
+          output: JSON.parse(output),
+        })
+        .returning({ storyId: StoryData?.storyId });
+      setLoading(false);
+      return result;
+    } catch (e) {
+      console.log('Error saving story in the database:', e);
+      setLoading(false);
     }
   };
 
@@ -90,7 +121,7 @@ const CreateStory = () => {
       </div>
       <div className='flex justify-end my-10'>
         <Button
-          disabled={loading}
+          disabled={isLoading}
           color='primary'
           className='p-10 text-2xl'
           onPress={generateStory}
