@@ -10,6 +10,7 @@ import { Button } from '@heroui/button';
 import { chatSession } from '@/config/GeminiAi';
 import { db } from '@/config/db';
 import { StoryData } from '@/config/schema';
+import CustomLoader from './_components/CustomLoader';
 
 // Load the prompt template from environment variables
 const AI_CREATE_STORY_PROMPT = process.env.NEXT_PUBLIC_CREATE_STORY_PROMPT;
@@ -129,6 +130,7 @@ const CreateStory = () => {
           Generate Story
         </Button>
       </div>
+      <CustomLoader isLoading={isLoading} />
     </div>
   );
 };
