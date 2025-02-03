@@ -1,19 +1,34 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import StorySubjectInput from './_components/StorySubjectInput';
 import StoryType from './_components/StoryType';
 import AgeGroup from './_components/AgeGroup';
 import ImageStyle from './_components/ImageStyle';
+import { Button } from '@heroui/button';
 
 export interface FieldData {
   fieldName: string;
   fieldValue: string;
-  isFree?: boolean;
 }
+
+export interface FormDataType {
+  storySubject?: string;
+  storyType?: string;
+  ageGroup?: string;
+  imageStyle?: string;
+}
+
 const CreateStory = () => {
+  const [formData, setFormData] = useState<FormDataType>({});
+
   const onHandleUserSelection = (data: FieldData) => {
-    console.log(data);
+    setFormData((prev) => ({
+      ...prev,
+      [data.fieldName]: data.fieldValue,
+    }));
+
+    console.log(formData);
   };
 
   return (
@@ -22,7 +37,7 @@ const CreateStory = () => {
         CREATE YOUR STORY
       </h2>
       <p className='text-2xl text-primary text-center'>
-        Unlock your creativity with AI: Craft stories like never before!Let our
+        Unlock your creativity with AI: Craft stories like never before! Let our
         AI bring your imagination to life, one story at a time.
       </p>
 
@@ -35,6 +50,11 @@ const CreateStory = () => {
         <AgeGroup userSelection={onHandleUserSelection} />
         {/* Image Style */}
         <ImageStyle userSelection={onHandleUserSelection} />
+      </div>
+      <div className='flex justify-end my-10'>
+        <Button color='primary' className='p-10 text-2xl'>
+          Generate Story
+        </Button>
       </div>
     </div>
   );
