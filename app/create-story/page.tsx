@@ -6,6 +6,10 @@ import StoryType from './_components/StoryType';
 import AgeGroup from './_components/AgeGroup';
 import ImageStyle from './_components/ImageStyle';
 import { Button } from '@heroui/button';
+import { chatSession } from '@/config/GeminiAi';
+
+// Load the prompt template from environment variables
+const AI_CREATE_STORY_PROMPT = process.env.NEXT_PUBLIC_CREATE_STORY_PROMPT;
 
 export interface FieldData {
   fieldName: string;
@@ -21,14 +25,47 @@ export interface FormDataType {
 
 const CreateStory = () => {
   const [formData, setFormData] = useState<FormDataType>({});
+  const [loading, setLoading] = useState(false);
 
   const onHandleUserSelection = (data: FieldData) => {
     setFormData((prev) => ({
       ...prev,
       [data.fieldName]: data.fieldValue,
     }));
+  };
 
-    console.log(formData);
+  const generateStory = async () => {
+    setLoading(true);
+
+    // Check if all required fields are filled
+    if (
+      !formData.storySubject ||
+      !formData.ageGroup ||
+      !formData.storyType ||
+      !formData.imageStyle
+    ) {
+      console.error('Please fill out all fields before generating the story.');
+      return;
+    }
+
+    // Replace placeholders in the prompt with user inputs
+    const FINAL_PROMPT = AI_CREATE_STORY_PROMPT?.replace(
+      '{storySubject}',
+      formData.storySubject
+    )
+      .replace('{ageGroup}', formData.ageGroup)
+      .replace('{storyType}', formData.storyType)
+      .replace('{imageStyle}', formData.imageStyle);
+
+    try {
+      // Send the prompt to the AI (Gemini AI in this case)
+      const result = await chatSession.sendMessage(FINAL_PROMPT);
+      console.log('AI Response:', result?.response.text());
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      console.error('Error generating story:', e);
+    }
   };
 
   return (
@@ -52,7 +89,12 @@ const CreateStory = () => {
         <ImageStyle userSelection={onHandleUserSelection} />
       </div>
       <div className='flex justify-end my-10'>
-        <Button color='primary' className='p-10 text-2xl'>
+        <Button
+          disabled={loading}
+          color='primary'
+          className='p-10 text-2xl'
+          onPress={generateStory}
+        >
           Generate Story
         </Button>
       </div>
