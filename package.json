@@ -28,6 +28,7 @@
     "postgres": "^3.4.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "replicate": "^1.0.1",
     "uuid4": "^2.0.3"
   },
   "devDependencies": {
