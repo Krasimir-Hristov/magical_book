@@ -25,11 +25,6 @@ const navItems: NavItem[] = [
   {
     title: 'Моята Библиотека',
     href: '/library',
-    icon: <BookOpen className='h-5 w-5' />,
-  },
-  {
-    title: 'Моят Акаунт',
-    href: '/account',
     icon: <UserCircle className='h-5 w-5' />,
   },
 ];

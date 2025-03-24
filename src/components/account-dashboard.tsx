@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CreditCard, Coins, User, Settings, FileText } from 'lucide-react';
+import { CreditCard, Coins, User, Settings, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 
 // Примерни пакети с токени
@@ -99,7 +99,7 @@ export function AccountDashboard() {
       <Card>
         <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
           <CardTitle className='text-sm font-medium'>Моите Книги</CardTitle>
-          <FileText className='h-4 w-4 text-muted-foreground' />
+          <BookOpen className='h-4 w-4 text-muted-foreground' />
         </CardHeader>
         <CardContent>
           <div className='text-2xl font-bold'>3 книги</div>
