@@ -77,11 +77,11 @@ export default function Home() {
           </div>
           <div className='mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 lg:gap-12 mt-12'>
             <Card className='flex flex-col items-center text-center'>
-              <CardHeader>
-                <div className='flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 mb-4'>
+              <CardHeader className='flex flex-col items-center w-full'>
+                <div className='flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 mb-4 mx-auto'>
                   <Sparkles className='h-10 w-10 text-indigo-600 dark:text-indigo-400' />
                 </div>
-                <CardTitle>Създайте История</CardTitle>
+                <CardTitle className='text-center'>Създайте История</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription>
@@ -91,11 +91,13 @@ export default function Home() {
               </CardContent>
             </Card>
             <Card className='flex flex-col items-center text-center'>
-              <CardHeader>
-                <div className='flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 mb-4'>
+              <CardHeader className='flex flex-col items-center w-full'>
+                <div className='flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 mb-4 mx-auto'>
                   <Clock className='h-10 w-10 text-indigo-600 dark:text-indigo-400' />
                 </div>
-                <CardTitle>Изчакайте Генерирането</CardTitle>
+                <CardTitle className='text-center'>
+                  Изчакайте Генерирането
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription>
@@ -105,11 +107,11 @@ export default function Home() {
               </CardContent>
             </Card>
             <Card className='flex flex-col items-center text-center'>
-              <CardHeader>
-                <div className='flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 mb-4'>
+              <CardHeader className='flex flex-col items-center w-full'>
+                <div className='flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 mb-4 mx-auto'>
                   <BookOpen className='h-10 w-10 text-indigo-600 dark:text-indigo-400' />
                 </div>
-                <CardTitle>Получете Книгата</CardTitle>
+                <CardTitle className='text-center'>Получете Книгата</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription>
