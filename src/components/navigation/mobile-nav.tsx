@@ -94,17 +94,6 @@ export function MobileNav() {
             <span>Ценоразпис</span>
           </Link>
           <Link
-            href='/account'
-            className={cn(
-              'flex items-center justify-center gap-2 text-muted-foreground',
-              'px-2 py-2 text-lg hover:text-primary transition-colors'
-            )}
-            onClick={() => setOpen(false)}
-          >
-            <UserCircle className='h-5 w-5' />
-            <span>Моят Акаунт</span>
-          </Link>
-          <Link
             href='/login'
             className={cn(
               'flex items-center justify-center gap-2 text-muted-foreground',

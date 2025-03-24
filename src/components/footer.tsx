@@ -76,6 +76,18 @@ export function Footer() {
               Условия за използване
             </Link>
             <Link
+              href='/how-it-works'
+              className='text-sm text-muted-foreground transition-colors hover:text-foreground'
+            >
+              Как Работи
+            </Link>
+            <Link
+              href='/pricing'
+              className='text-sm text-muted-foreground transition-colors hover:text-foreground'
+            >
+              Ценоразпис
+            </Link>
+            <Link
               href='/privacy'
               className='text-sm text-muted-foreground transition-colors hover:text-foreground'
             >
