@@ -41,7 +41,7 @@ export function MainNav() {
     <nav className='flex items-center space-x-4'>
       <Link href='/' className='flex items-center space-x-2'>
         <BookOpen className='h-6 w-6' />
-        <span className='font-bold hidden sm:inline-block'>Вълшебна Книга</span>
+        <span className='font-bold'>Вълшебна Книга</span>
       </Link>
       <div className='flex items-center space-x-1 sm:space-x-2'>
         {navItems.map((item) => (

@@ -9,14 +9,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { BookOpen } from 'lucide-react';
 import Link from 'next/link';
 
 export function Header() {
   return (
     <header className='sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
       <div className='container flex h-16 max-w-screen-xl items-center justify-between mx-auto px-4 sm:px-6 lg:px-8'>
-        <MainNav />
-        <MobileNav />
+        {/* Мобилна навигация (видима само на малки екрани) */}
+        <div className='flex items-center sm:hidden'>
+          <MobileNav />
+          <Link href='/' className='flex items-center ml-2'>
+            <BookOpen className='h-6 w-6' />
+            <span className='font-bold ml-2'>Вълшебна Книга</span>
+          </Link>
+        </div>
+
+        {/* Основна навигация (видима само на по-големи екрани) */}
+        <div className='hidden sm:block'>
+          <MainNav />
+        </div>
+
         <div className='flex items-center space-x-4'>
           <div className='flex items-center'>
             <DropdownMenu>
