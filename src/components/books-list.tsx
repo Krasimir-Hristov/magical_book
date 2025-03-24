@@ -103,24 +103,41 @@ export function BooksList() {
       ) : (
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center'>
           {books.map((book) => (
-            <Card
+            <div
               key={book.id}
-              className='overflow-hidden hover:shadow-lg transition-shadow'
+              className='bg-white border rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden'
+              style={{
+                height: '400px',
+                display: 'grid',
+                gridTemplateRows: 'auto auto 1fr auto',
+              }}
             >
-              <div className='relative aspect-[3/4] h-40 md:h-52'>
+              {/* Изображение - фиксирана височина */}
+              <div style={{ height: '160px' }}>
                 <img
                   src={book.coverUrl}
                   alt={book.title}
-                  className='absolute inset-0 w-full h-full object-cover'
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               </div>
-              <CardHeader className='p-4'>
-                <CardTitle className='text-lg'>{book.title}</CardTitle>
-                <CardDescription>
+
+              {/* Заглавие и дата - фиксирана височина */}
+              <div className='p-4 pb-2'>
+                <h3 className='text-lg font-semibold truncate'>{book.title}</h3>
+                <p className='text-sm text-gray-500'>
                   Създадена на: {book.createdAt}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className='p-4 pt-0 flex gap-2'>
+                </p>
+              </div>
+
+              {/* Допълнителна информация - раздел с разширяемо съдържание */}
+              <div className='p-4 pt-0 overflow-hidden'>
+                <p className='text-sm text-gray-500'>
+                  Възраст: {book.ageRange} години
+                </p>
+              </div>
+
+              {/* Бутони - фиксирана височина в долната част */}
+              <div className='p-4 border-t flex gap-2'>
                 <Button
                   className='flex-1'
                   variant='outline'
@@ -139,12 +156,15 @@ export function BooksList() {
                   variant='outline'
                   size='icon'
                   className='text-red-500 hover:text-red-700 hover:bg-red-50'
-                  onClick={() => setBookToDelete(book.id)}
+                  onClick={() => {
+                    setBookToDelete(book.id);
+                    setIsDialogOpen(true);
+                  }}
                 >
                   <Trash2 className='h-4 w-4' />
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       )}

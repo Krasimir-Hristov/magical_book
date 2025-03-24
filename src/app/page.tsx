@@ -170,37 +170,57 @@ export default function Home() {
           </h2>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
             {books.map((book) => (
-              <Card
+              <div
                 key={book.id}
-                className='overflow-hidden hover:shadow-lg transition-shadow'
+                className='bg-white border rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden'
+                style={{
+                  height: '400px',
+                  display: 'grid',
+                  gridTemplateRows: 'auto auto 1fr auto',
+                }}
               >
-                <div className='relative h-48'>
+                {/* Изображение - фиксирана височина */}
+                <div style={{ height: '160px' }}>
                   <img
                     src={book.coverUrl}
                     alt={book.title}
-                    className='w-full h-full object-cover'
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }}
                   />
                 </div>
-                <CardHeader>
-                  <CardTitle className='text-xl'>{book.title}</CardTitle>
-                  <CardDescription className='text-base'>
+
+                {/* Заглавие и дата - фиксирана височина */}
+                <div className='p-4 pb-2'>
+                  <h3 className='text-lg font-semibold truncate'>
+                    {book.title}
+                  </h3>
+                  <p className='text-sm text-gray-500'>
                     Автор: {book.authorName}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className='flex justify-between items-center text-sm text-muted-foreground'>
+                  </p>
+                </div>
+
+                {/* Допълнителна информация - раздел с разширяемо съдържание */}
+                <div className='p-4 pt-0 overflow-hidden'>
+                  <div className='flex justify-between items-center text-sm text-gray-500'>
                     <span>Възраст: {book.ageRange}</span>
                     <span>{book.createdAt}</span>
                   </div>
+                </div>
+
+                {/* Бутони - фиксирана височина в долната част */}
+                <div className='p-4 border-t'>
                   <Button
-                    className='w-full mt-4'
+                    className='w-full'
                     variant='outline'
                     onClick={() => handleReadBook(book.id)}
                   >
                     {isLoggedIn ? 'Прочети' : 'Влез за да четеш'}
                   </Button>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         </div>
