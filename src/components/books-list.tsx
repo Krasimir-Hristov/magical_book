@@ -75,42 +75,44 @@ export function BooksList() {
           </Button>
         </div>
       ) : (
-        <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-          {books.map((book) => (
-            <Card key={book.id} className='overflow-hidden'>
-              <div className='aspect-[3/4] w-full bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-900 dark:to-purple-900 flex items-center justify-center'>
-                <BookOpen className='h-12 w-12 text-indigo-600 dark:text-indigo-300' />
-              </div>
-              <CardHeader className='p-4'>
-                <CardTitle className='line-clamp-1 text-lg'>
-                  {book.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className='p-4 pt-0 text-sm text-muted-foreground'>
-                <p>Възраст: {book.ageRange} години</p>
-                <p>Създадена на: {book.createdAt}</p>
-              </CardContent>
-              <CardFooter className='flex justify-between p-4'>
-                <Button variant='outline' size='sm' asChild>
-                  <Link href={`/library/${book.id}`}>
-                    <Eye className='mr-2 h-4 w-4' />
-                    Преглед
-                  </Link>
-                </Button>
-                <Button
-                  variant='destructive'
-                  size='sm'
-                  onClick={() => {
-                    setBookToDelete(book.id);
-                    setIsDialogOpen(true);
-                  }}
-                >
-                  <Trash2 className='mr-2 h-4 w-4' />
-                  Изтрий
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+        <div className='flex justify-center'>
+          <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+            {books.map((book) => (
+              <Card key={book.id} className='overflow-hidden'>
+                <div className='aspect-[3/4] w-full bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-900 dark:to-purple-900 flex items-center justify-center'>
+                  <BookOpen className='h-12 w-12 text-indigo-600 dark:text-indigo-300' />
+                </div>
+                <CardHeader className='p-4'>
+                  <CardTitle className='line-clamp-1 text-lg'>
+                    {book.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className='p-4 pt-0 text-sm text-muted-foreground'>
+                  <p>Възраст: {book.ageRange} години</p>
+                  <p>Създадена на: {book.createdAt}</p>
+                </CardContent>
+                <CardFooter className='flex justify-between p-4'>
+                  <Button variant='outline' size='sm' asChild>
+                    <Link href={`/library/${book.id}`}>
+                      <Eye className='mr-2 h-4 w-4' />
+                      Преглед
+                    </Link>
+                  </Button>
+                  <Button
+                    variant='destructive'
+                    size='sm'
+                    onClick={() => {
+                      setBookToDelete(book.id);
+                      setIsDialogOpen(true);
+                    }}
+                  >
+                    <Trash2 className='mr-2 h-4 w-4' />
+                    Изтрий
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         </div>
       )}
 
