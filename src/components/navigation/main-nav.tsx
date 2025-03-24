@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { BookOpen, Star, UserCircle } from 'lucide-react';
+import { BookOpen, Star, UserCircle, Info, CreditCard } from 'lucide-react';
 
 interface NavItem {
   title: string;
@@ -26,6 +26,16 @@ const navItems: NavItem[] = [
     title: 'Моята Библиотека',
     href: '/library',
     icon: <UserCircle className='h-5 w-5' />,
+  },
+  {
+    title: 'Как Работи',
+    href: '/how-it-works',
+    icon: <Info className='h-5 w-5' />,
+  },
+  {
+    title: 'Ценоразпис',
+    href: '/pricing',
+    icon: <CreditCard className='h-5 w-5' />,
   },
 ];
 
