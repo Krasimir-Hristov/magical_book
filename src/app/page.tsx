@@ -11,6 +11,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useEffect, useState } from 'react';
+import { useAuth } from '@/lib/auth';
+import { useRouter } from 'next/navigation';
 
 interface Book {
   id: string;
@@ -74,9 +76,18 @@ const dummyBooks: Book[] = [
 ];
 
 export default function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // За тестване, винаги true
+  const { isLoggedIn } = useAuth();
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  const handleProtectedRoute = (path: string) => {
+    if (isLoggedIn) {
+      router.push(path);
+    } else {
+      router.push('/login');
+    }
+  };
 
   useEffect(() => {
     // Симулираме зареждане на данни
@@ -120,19 +131,20 @@ export default function Home() {
                 </p>
               </div>
               <div className='flex flex-col gap-2 min-[400px]:flex-row items-center justify-center'>
-                <Link href='/create'>
-                  <Button
-                    size='lg'
-                    className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
-                  >
-                    Създайте Своя Книга
-                  </Button>
-                </Link>
-                <Link href='/library'>
-                  <Button size='lg' variant='outline'>
-                    Моята Библиотека
-                  </Button>
-                </Link>
+                <Button
+                  size='lg'
+                  className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
+                  onClick={() => handleProtectedRoute('/create')}
+                >
+                  Създайте Своя Книга
+                </Button>
+                <Button
+                  size='lg'
+                  variant='outline'
+                  onClick={() => handleProtectedRoute('/library')}
+                >
+                  Моята Библиотека
+                </Button>
               </div>
             </div>
           </div>
@@ -196,19 +208,20 @@ export default function Home() {
                 </p>
               </div>
               <div className='flex flex-col gap-2 min-[400px]:flex-row items-center justify-center'>
-                <Link href='/create'>
-                  <Button
-                    size='lg'
-                    className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
-                  >
-                    Започни Сега
-                  </Button>
-                </Link>
-                <Link href='/library'>
-                  <Button size='lg' variant='outline'>
-                    Разгледай Примери
-                  </Button>
-                </Link>
+                <Button
+                  size='lg'
+                  className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
+                  onClick={() => router.push('/login')}
+                >
+                  Започни Сега
+                </Button>
+                <Button
+                  size='lg'
+                  variant='outline'
+                  onClick={() => router.push('/login')}
+                >
+                  Разгледай Примери
+                </Button>
               </div>
             </div>
             <div className='mx-auto lg:mr-0 relative'>
@@ -302,20 +315,21 @@ export default function Home() {
               </p>
             </div>
             <div className='flex flex-col gap-2 min-[400px]:flex-row items-center justify-center'>
-              <Link href='/create'>
-                <Button
-                  size='lg'
-                  className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
-                >
-                  Създай Книга Сега
-                </Button>
-              </Link>
-              <Link href='/account'>
-                <Button size='lg' variant='outline'>
-                  <CreditCard className='mr-2 h-4 w-4' />
-                  Купи Токени
-                </Button>
-              </Link>
+              <Button
+                size='lg'
+                className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
+                onClick={() => router.push('/login')}
+              >
+                Създай Книга Сега
+              </Button>
+              <Button
+                size='lg'
+                variant='outline'
+                onClick={() => router.push('/login')}
+              >
+                <CreditCard className='mr-2 h-4 w-4' />
+                Купи Токени
+              </Button>
             </div>
           </div>
         </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import { MainNav } from '@/components/navigation/main-nav';
 import { MobileNav } from '@/components/navigation/mobile-nav';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -11,10 +13,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { BookOpen, LogIn } from 'lucide-react';
 import Link from 'next/link';
+import { useAuth } from '@/lib/auth';
 
 export function Header() {
-  const isLoggedIn = true; // Заменете с вашата логика за проверка на логнато състояние
-  const userName = 'Вашето Име'; // Заменете с името на потребителя, ако е логнат
+  const { isLoggedIn, userName, logout } = useAuth();
 
   return (
     <header className='sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
@@ -39,11 +41,10 @@ export function Header() {
               <DropdownMenu>
                 <DropdownMenuTrigger className='overflow-hidden rounded-full'>
                   <Avatar className='h-8 w-8'>
-                    <AvatarImage
-                      src='/placeholder-avatar.jpg'
-                      alt='@username'
-                    />
-                    <AvatarFallback>ПК</AvatarFallback>
+                    <AvatarImage src='/placeholder-avatar.jpg' alt={userName} />
+                    <AvatarFallback>
+                      {userName.substring(0, 2).toUpperCase()}
+                    </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align='end'>
@@ -59,7 +60,7 @@ export function Header() {
                     <Link href='/account#settings'>Настройки</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Изход</DropdownMenuItem>
+                  <DropdownMenuItem onClick={logout}>Изход</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
