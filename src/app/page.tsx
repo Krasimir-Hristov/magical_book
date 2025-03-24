@@ -350,7 +350,7 @@ export default function Home() {
             </h2>
             <p className='text-muted-foreground text-lg max-w-2xl mx-auto'>
               Създаването на вълшебна детска книга никога не е било толкова
-              лесно!
+              лесно! Регистрирайте се сега и получете 3 безплатни кредита.
             </p>
           </motion.div>
 
@@ -358,21 +358,21 @@ export default function Home() {
             {[
               {
                 icon: <Sparkles className='h-10 w-10 text-indigo-600' />,
-                title: 'Създайте История',
+                title: 'Въвеждане на параметри',
                 description:
-                  'Въведете творческа идея, изберете възрастова група и стил на книгата.',
+                  'Въведете тема, заглавие, възрастова група и стил на корицата за вашата нова книга.',
               },
               {
                 icon: <Clock className='h-10 w-10 text-indigo-600' />,
-                title: 'Изчакайте Генерирането',
+                title: 'Генериране на книга',
                 description:
-                  'Нашият AI ще създаде увлекателна история и красиви илюстрации само за няколко минути.',
+                  'Нашият AI ще създаде уникална книга, базирана на зададените от вас параметри.',
               },
               {
                 icon: <BookOpen className='h-10 w-10 text-indigo-600' />,
-                title: 'Получете Книгата',
+                title: 'Четене и споделяне',
                 description:
-                  'Прегледайте, редактирайте и изтеглете вашата персонализирана книга или я споделете с близките.',
+                  'Четете книгата онлайн, изтеглете я като PDF или я споделете с близките.',
               },
             ].map((step, index) => (
               <motion.div
@@ -424,8 +424,8 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            Регистрирайте се сега и започнете да създавате вълшебни истории за
-            вашите деца.
+            Регистрирайте се сега, получете 3 безплатни кредита и започнете да
+            създавате вълшебни истории за вашите деца.
           </motion.p>
 
           <motion.div
@@ -449,10 +449,13 @@ export default function Home() {
               <Button
                 variant='outline'
                 size='lg'
-                className='border-white text-white hover:bg-white/10'
+                className='border-white text-black hover:bg-white/10'
+                asChild
               >
-                <CreditCard className='mr-2 h-4 w-4' />
-                Научи Повече
+                <Link href='/how-it-works'>
+                  <CreditCard className='mr-2 h-4 w-4 ' />
+                  Научи Повече
+                </Link>
               </Button>
             </motion.div>
           </motion.div>
