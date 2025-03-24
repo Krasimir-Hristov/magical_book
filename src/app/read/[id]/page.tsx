@@ -89,7 +89,7 @@ const dummyBooks: Record<string, Book> = {
   '1': {
     id: '1',
     title: 'Приключенията на Малкия Космонавт',
-    coverUrl: 'https://placehold.co/400x600/4f46e5/ffffff?text=Космонавт',
+    coverUrl: '/aiavatar.png',
     content: [
       ...baseContentBook1,
       ...generateDummyContent(
@@ -104,7 +104,7 @@ const dummyBooks: Record<string, Book> = {
   '2': {
     id: '2',
     title: 'Тайната на Океана',
-    coverUrl: 'https://placehold.co/400x600/0ea5e9/ffffff?text=Океан',
+    coverUrl: '/aiavatar.png',
     content: [
       ...baseContentBook2,
       ...generateDummyContent(
@@ -119,7 +119,7 @@ const dummyBooks: Record<string, Book> = {
   '3': {
     id: '3',
     title: 'Приятелите в Градината',
-    coverUrl: 'https://placehold.co/400x600/22c55e/ffffff?text=Градина',
+    coverUrl: '/aiavatar.png',
     content: [
       ...baseContentBook3,
       ...generateDummyContent(

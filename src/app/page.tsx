@@ -28,7 +28,7 @@ const dummyBooks: Book[] = [
   {
     id: '1',
     title: 'Приключенията на Малкия Космонавт',
-    coverUrl: '/placeholder-book-cover-1.jpg',
+    coverUrl: '/aiavatar.png',
     createdAt: '15.03.2024',
     ageRange: '5-7',
     authorName: 'Мария Петрова',
@@ -36,7 +36,7 @@ const dummyBooks: Book[] = [
   {
     id: '2',
     title: 'Тайната на Океана',
-    coverUrl: '/placeholder-book-cover-2.jpg',
+    coverUrl: '/aiavatar.png',
     createdAt: '14.03.2024',
     ageRange: '8-12',
     authorName: 'Иван Иванов',
@@ -44,7 +44,7 @@ const dummyBooks: Book[] = [
   {
     id: '3',
     title: 'Приятелите в Градината',
-    coverUrl: '/placeholder-book-cover-3.jpg',
+    coverUrl: '/aiavatar.png',
     createdAt: '13.03.2024',
     ageRange: '2-4',
     authorName: 'Петър Димитров',
@@ -52,7 +52,7 @@ const dummyBooks: Book[] = [
   {
     id: '4',
     title: 'Вълшебната Книга с Приключения',
-    coverUrl: '/placeholder-book-cover-1.jpg',
+    coverUrl: '/aiavatar.png',
     createdAt: '12.03.2024',
     ageRange: '5-7',
     authorName: 'Анна Стоянова',
@@ -60,7 +60,7 @@ const dummyBooks: Book[] = [
   {
     id: '5',
     title: 'Пътешествие в Космоса',
-    coverUrl: '/placeholder-book-cover-2.jpg',
+    coverUrl: '/aiavatar.png',
     createdAt: '11.03.2024',
     ageRange: '8-12',
     authorName: 'Георги Николов',
@@ -68,7 +68,7 @@ const dummyBooks: Book[] = [
   {
     id: '6',
     title: 'Приятелите в Детската Градина',
-    coverUrl: '/placeholder-book-cover-3.jpg',
+    coverUrl: '/aiavatar.png',
     createdAt: '10.03.2024',
     ageRange: '2-4',
     authorName: 'Елена Димитрова',
