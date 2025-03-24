@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Magical Book Project
 
-## Getting Started
+## Описание на проекта
 
-First, run the development server:
+Това е платформа за създаване на магически детски книги с помощта на изкуствен интелект. Потребителите могат да генерират уникални истории и корици, да ги запазват и споделят.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Стъпки за завършване на проекта
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. Интеграция със Supabase
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Аутентикация с Google Email:**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+  - Настройте Supabase за аутентикация с Google.
+  - Имплементирайте логика за вход и регистрация в приложението.
 
-## Learn More
+- **Запазване на данни на потребителя:**
 
-To learn more about Next.js, take a look at the following resources:
+  - Създайте таблици в Supabase за съхранение на потребителски данни.
+  - Имплементирайте CRUD операции за управление на потребителски профили.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Запазване на книги и корици:**
+  - Създайте таблици за съхранение на данни за книги и корици.
+  - Имплементирайте логика за запазване и извличане на книги и корици.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 2. Интеграция на AI модели
 
-## Deploy on Vercel
+- **Генериране на текст:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  - Свържете AI модел за генериране на текст, базиран на въведените от потребителя данни.
+  - Имплементирайте интерфейс за взаимодействие с модела и показване на резултатите.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Генериране на корици:**
+  - Свържете AI модел за генериране на корици, базиран на въведените от потребителя данни.
+  - Имплементирайте интерфейс за взаимодействие с модела и показване на резултатите.
+
+### 3. Интеграция със Stripe
+
+- **Плащания:**
+  - Настройте Stripe за обработка на плащания.
+  - Имплементирайте логика за покупка на токени и управление на плащанията.
+
+## Допълнителни задачи
+
+- **Тестване и отстраняване на грешки:**
+
+  - Проведете обстойно тестване на всички функционалности.
+  - Отстранете всички открити грешки и проблеми.
+
+- **Оптимизация на производителността:**
+
+  - Оптимизирайте кода и базата данни за по-добра производителност.
+  - Уверете се, че приложението работи гладко на различни устройства и браузъри.
+
+- **Документация:**
+  - Обновете документацията с инструкции за инсталация и използване.
+  - Добавете ръководства за потребителите и разработчиците.
+
+## Заключение
+
+След като всички тези стъпки бъдат изпълнени, приложението ще бъде готово за пускане на пазара. Успех!
