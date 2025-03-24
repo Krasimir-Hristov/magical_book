@@ -21,14 +21,18 @@ export async function createCheckoutSession(
     // Симулиране на забавяне за по-реалистично усещане
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
+    // Използвам options за да създам по-реалистичен отговор
+    const { amount, currency, description, userId } = options;
+    const sessionId = `cs_${userId}_${Math.random()
+      .toString(36)
+      .substring(2, 15)}`;
+
     // В реалната имплементация тук ще има API заявка към Stripe
     // но за целите на демото просто връщаме успешен резултат
     return {
       success: true,
-      sessionId: `cs_test_${Math.random().toString(36).substring(2, 15)}`,
-      url: `/payment-success?session_id=cs_test_${Math.random()
-        .toString(36)
-        .substring(2, 15)}`,
+      sessionId,
+      url: `/payment-success?session_id=${sessionId}&amount=${amount}&currency=${currency}`,
     };
   } catch (error) {
     console.error('Error creating checkout session:', error);
@@ -46,6 +50,14 @@ export async function processPaymentSuccess(
   try {
     // Симулиране на забавяне
     await new Promise((resolve) => setTimeout(resolve, 500));
+
+    // Извличаме информация от sessionId
+    // В реалния случай ще имаме реална проверка чрез Stripe API
+    const isValidSession = sessionId.startsWith('cs_');
+
+    if (!isValidSession) {
+      throw new Error(`Невалидна сесия: ${sessionId}`);
+    }
 
     // В реалната имплементация тук ще има API заявка за проверка на сесията
     // но за целите на демото просто връщаме успешен резултат с примерен брой токени

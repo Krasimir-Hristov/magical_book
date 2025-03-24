@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { BookOpen, Menu, Star, UserCircle, X, LogIn } from 'lucide-react';
+import { BookOpen, Menu, Star, UserCircle, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,

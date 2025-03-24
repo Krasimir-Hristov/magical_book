@@ -11,6 +11,16 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 // Примерни функции за автентикация
 export async function signIn(email: string, password: string) {
   try {
+    // Използваме password за да проверим дали е валиден (в реалния случай)
+    const isValidPassword = password && password.length >= 6;
+
+    if (!isValidPassword) {
+      return {
+        data: null,
+        error: { message: 'Невалидна парола' },
+      };
+    }
+
     // Фиктивен успешен отговор за целите на демото
     return {
       data: {
@@ -64,31 +74,27 @@ export async function signOut() {
 // Примерни функции за работа с книги
 export async function getUserBooks(userId: string) {
   try {
-    // Връщане на фиктивни данни за книги за целите на демото
+    // Използваме userId за симулиране на различни книги за различни потребители
+    const userIdSuffix = userId.split('-').pop() || '123';
+    const booksCount = (parseInt(userIdSuffix) % 5) + 1; // 1-5 книги в зависимост от потребителя
+
+    // Генерираме до 5 примерни книги
+    const books = [];
+    for (let i = 0; i < booksCount; i++) {
+      books.push({
+        id: `book-${i}-${userId}`,
+        title: `Примерна книга ${i + 1}`,
+        coverUrl: `/placeholder-book-cover-${(i % 3) + 1}.jpg`,
+        createdAt: new Date(Date.now() - i * 86400000).toLocaleDateString(
+          'bg-BG'
+        ), // Последните n дни
+        ageRange: i % 3 === 0 ? '2-4' : i % 3 === 1 ? '5-7' : '8-12',
+      });
+    }
+
+    // Фиктивен успешен отговор за целите на демото
     return {
-      data: [
-        {
-          id: '1',
-          title: 'Вълшебното Пътешествие',
-          coverImage: '/placeholder-book-cover.jpg',
-          ageRange: '5-7',
-          createdAt: '24.03.2024',
-        },
-        {
-          id: '2',
-          title: 'Приятелите от Гората',
-          coverImage: '/placeholder-book-cover.jpg',
-          ageRange: '2-4',
-          createdAt: '18.03.2024',
-        },
-        {
-          id: '3',
-          title: 'Космическото Приключение',
-          coverImage: '/placeholder-book-cover.jpg',
-          ageRange: '8-12',
-          createdAt: '10.03.2024',
-        },
-      ],
+      data: books,
       error: null,
     };
   } catch (error) {
@@ -97,7 +103,10 @@ export async function getUserBooks(userId: string) {
   }
 }
 
-export async function createBook(userId: string, bookData: any) {
+export async function createBook(
+  userId: string,
+  bookData: Record<string, unknown>
+) {
   try {
     // Фиктивен успешен отговор за целите на демото
     return {
@@ -117,6 +126,17 @@ export async function createBook(userId: string, bookData: any) {
 
 export async function deleteBook(bookId: string) {
   try {
+    // В реалността тук ще проверим дали книгата съществува и принадлежи на потребителя
+    const isValid = bookId.startsWith('book-');
+
+    if (!isValid) {
+      return {
+        error: {
+          message: `Книга с ID ${bookId} не съществува или нямате права за изтриването й.`,
+        },
+      };
+    }
+
     // Фиктивен успешен отговор за целите на демото
     return { error: null };
   } catch (error) {

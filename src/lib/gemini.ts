@@ -144,14 +144,28 @@ export async function generateBookTitle(
   // Симулиране на забавяне
   await new Promise((resolve) => setTimeout(resolve, 500));
 
+  // Базови заглавия според възрастовата група
+  let baseTitle = '';
+  if (ageRange === '2-4') {
+    baseTitle = 'Малкото';
+  } else if (ageRange === '5-7') {
+    baseTitle = 'Невероятното';
+  } else {
+    baseTitle = 'Фантастичното';
+  }
+
+  // Извличаме ключова дума от подсказката
+  const keywords = prompt.split(' ');
+  const keyword = keywords.length > 3 ? keywords[3] : keywords[0];
+
   // Няколко примерни заглавия
   const titles = [
-    'Вълшебното Пътешествие',
-    'Приключение в Космоса',
-    'Тайната на Старата Гора',
-    'Приятели Завинаги',
-    'Една Специална Нощ',
-    'Малкият Герой',
+    `${baseTitle} Пътешествие на ${keyword}`,
+    `Приключение в Космоса с ${keyword}`,
+    `Тайната на ${keyword}`,
+    `Приятели Завинаги: ${keyword}`,
+    `Една Специална Нощ и ${keyword}`,
+    `Малкият Герой и ${keyword}`,
   ];
 
   // Избираме случайно заглавие
