@@ -212,52 +212,121 @@ export default function ReadBookPage({
   const currentParagraphs = book.content.slice(startIndex, endIndex);
 
   return (
-    <div className='container mx-auto px-4 py-8'>
-      <div className='flex justify-between items-center mb-8'>
-        <h1 className='text-3xl font-bold'>{book.title}</h1>
-        <div className='flex gap-4'>
+    <div className='min-h-screen bg-amber-50 py-10 px-4 sm:px-6'>
+      <div className='max-w-5xl mx-auto'>
+        {/* Заглавие и бутони за навигация */}
+        <div className='flex justify-between items-center mb-8'>
+          <Button
+            variant='ghost'
+            onClick={() => router.push('/')}
+            className='hover:bg-amber-100 transition-colors'
+          >
+            <ChevronLeft className='mr-2 h-4 w-4' />
+            Назад към библиотеката
+          </Button>
           <DownloadBook
             bookId={book.id}
             bookTitle={book.title}
             bookContent={book.content.join('\n\n')}
             coverUrl={book.coverUrl}
           />
-          <Button variant='outline' onClick={() => router.push('/')}>
-            Назад
-          </Button>
-        </div>
-      </div>
-
-      <div className='prose prose-lg max-w-none'>
-        <p className='text-gray-600 mb-8'>Автор: {book.authorName}</p>
-        <div className='whitespace-pre-wrap min-h-[400px]'>
-          {currentParagraphs.map((paragraph, index) => (
-            <p key={index} className='mb-4'>
-              {paragraph}
-            </p>
-          ))}
         </div>
 
-        <div className='flex justify-between items-center mt-8 pt-4 border-t'>
-          <Button
-            variant='outline'
-            onClick={handlePrevPage}
-            disabled={currentPage === 0}
-          >
-            <ChevronLeft className='mr-2 h-4 w-4' />
-            Предишна страница
-          </Button>
-          <span className='text-gray-600'>
-            Страница {currentPage + 1} от {totalPages}
-          </span>
-          <Button
-            variant='outline'
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages - 1}
-          >
-            Следваща страница
-            <ChevronRight className='ml-2 h-4 w-4' />
-          </Button>
+        {/* Контейнер за книгата */}
+        <div className='book-container'>
+          {currentPage === 0 ? (
+            /* Заглавна страница / Корица на книгата */
+            <div className='relative'>
+              {/* Книжно оформление за корицата */}
+              <div className='absolute inset-0 bg-amber-100 shadow-2xl rounded-lg -z-10 transform -rotate-1 translate-x-2'></div>
+              <div className='absolute inset-0 bg-amber-100 shadow-2xl rounded-lg -z-10 transform rotate-1 -translate-x-2'></div>
+
+              <div className='bg-gradient-to-b from-amber-200 to-white rounded-lg shadow-lg overflow-hidden border border-amber-300 p-12 sm:p-16 relative min-h-[70vh] flex flex-col items-center justify-center'>
+                <div className='text-center'>
+                  <h1 className='text-5xl sm:text-6xl font-serif font-bold text-amber-900 mb-8 px-4'>
+                    {book.title}
+                  </h1>
+                  <div className='w-32 h-1 bg-amber-400 mx-auto mb-8'></div>
+
+                  <div className='mb-10 flex justify-center'>
+                    <img
+                      src={book.coverUrl}
+                      alt={`Корица на книгата ${book.title}`}
+                      className='h-72 sm:h-96 rounded-md shadow-xl border-4 border-amber-100'
+                    />
+                  </div>
+
+                  <p className='text-center text-amber-800 font-medium text-xl sm:text-2xl mt-8'>
+                    от {book.authorName}
+                  </p>
+                  <p className='text-center text-amber-700 mt-3'>
+                    За възраст: {book.ageRange} години
+                  </p>
+
+                  <div className='mt-16 animate-bounce'>
+                    <p className='text-amber-600 font-medium'>
+                      Натиснете "Следваща страница" за да започнете
+                    </p>
+                    <ChevronRight className='h-8 w-8 text-amber-600 mx-auto mt-2' />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* Страници със съдържание */
+            <div className='relative'>
+              {/* Книжно оформление */}
+              <div className='absolute inset-0 bg-white shadow-2xl rounded-lg -z-10 transform -rotate-1 translate-x-2'></div>
+              <div className='absolute inset-0 bg-white shadow-2xl rounded-lg -z-10 transform rotate-1 -translate-x-2'></div>
+
+              {/* Същинско съдържание */}
+              <div className='bg-white rounded-lg shadow-lg border border-amber-100 p-8 sm:p-12 relative'>
+                <div className='font-serif prose prose-amber prose-lg max-w-none mb-16'>
+                  {currentParagraphs.map((paragraph, index) => (
+                    <p
+                      key={index}
+                      className='mb-6 text-gray-800 leading-relaxed first:first-letter:text-4xl first:first-letter:font-bold first:first-letter:text-amber-800 first:first-letter:mr-1 first:first-letter:float-left'
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+
+                {/* Номер на страница */}
+                <div className='absolute bottom-4 left-0 right-0 flex justify-center'>
+                  <div className='font-serif text-amber-800 text-sm border-t border-amber-200 pt-2 px-6'>
+                    <span>{currentPage}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Навигация между страниците */}
+          <div className='flex justify-between items-center mt-12 pt-4'>
+            <Button
+              variant='outline'
+              onClick={handlePrevPage}
+              disabled={currentPage === 0}
+              className='bg-white border-amber-300 hover:bg-amber-50 text-amber-800'
+            >
+              <ChevronLeft className='mr-2 h-5 w-5' />
+              {currentPage === 1 ? 'Към корицата' : 'Предишна страница'}
+            </Button>
+            <span className='text-amber-800 font-medium'>
+              {currentPage === 0 ? 'Корица' : `Страница ${currentPage}`} /{' '}
+              {totalPages}
+            </span>
+            <Button
+              variant='outline'
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages - 1}
+              className='bg-white border-amber-300 hover:bg-amber-50 text-amber-800'
+            >
+              {currentPage === 0 ? 'Започни четене' : 'Следваща страница'}
+              <ChevronRight className='ml-2 h-5 w-5' />
+            </Button>
+          </div>
         </div>
       </div>
     </div>
