@@ -28,7 +28,9 @@ export function Footer() {
             >
               <BookOpen className='h-5 w-5' />
             </motion.div>
-            <span className='text-sm font-medium'>Вълшебна Книга</span>
+            <span className='text-sm font-medium whitespace-nowrap'>
+              Вълшебна Книга
+            </span>
           </div>
           <p className='text-sm text-muted-foreground'>
             Платформа за създаване на магически детски книги с помощта на

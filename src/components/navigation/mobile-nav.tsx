@@ -35,7 +35,9 @@ export function MobileNav() {
         <SheetTitle className='sr-only'>Навигационно меню</SheetTitle>
         <div className='flex items-center justify-center mb-6'>
           <BookOpen className='h-6 w-6 mr-2' />
-          <span className='font-bold text-xl'>Вълшебна Книга</span>
+          <span className='font-bold text-xl whitespace-nowrap'>
+            Вълшебна Книга
+          </span>
         </div>
         <nav className='flex flex-col gap-4'>
           <Link

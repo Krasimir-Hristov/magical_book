@@ -47,7 +47,7 @@ export function MainNav() {
       <div className='flex-1 flex justify-start'>
         <Link href='/' className='flex items-center space-x-2'>
           <BookOpen className='h-6 w-6' />
-          <span className='font-bold'>Вълшебна Книга</span>
+          <span className='font-bold whitespace-nowrap'>Вълшебна Книга</span>
         </Link>
       </div>
       <nav className='flex justify-center items-center space-x-8'>
