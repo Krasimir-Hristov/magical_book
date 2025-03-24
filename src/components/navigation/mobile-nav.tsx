@@ -3,7 +3,12 @@
 import Link from 'next/link';
 import { BookOpen, Menu, Star, UserCircle, X, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
@@ -19,6 +24,7 @@ export function MobileNav() {
         </Button>
       </SheetTrigger>
       <SheetContent side='left' className='pr-0'>
+        <SheetTitle className='sr-only'>Навигационно меню</SheetTitle>
         <div className='flex items-center justify-center mb-6'>
           <BookOpen className='h-6 w-6 mr-2' />
           <span className='font-bold text-xl'>Вълшебна Книга</span>
