@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -17,17 +16,17 @@ export default function Home() {
       <section className='w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800'>
         <div className='container px-4 md:px-6'>
           <div className='grid gap-6 lg:grid-cols-2 lg:gap-12 items-center'>
-            <div className='flex flex-col justify-center space-y-4'>
+            <div className='flex flex-col justify-center space-y-4 text-center lg:text-left'>
               <div className='space-y-2'>
                 <h1 className='text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl'>
                   Създайте Магически Детски Книги с AI
                 </h1>
-                <p className='max-w-[600px] text-muted-foreground md:text-xl'>
+                <p className='max-w-[600px] text-muted-foreground md:text-xl mx-auto lg:mx-0'>
                   Трансформирайте своите идеи в красиви детски книги за минути с
                   помощта на изкуствен интелект.
                 </p>
               </div>
-              <div className='flex flex-col gap-2 min-[400px]:flex-row'>
+              <div className='flex flex-col gap-2 min-[400px]:flex-row items-center justify-center'>
                 <Link href='/create'>
                   <Button
                     size='lg'
@@ -76,50 +75,47 @@ export default function Home() {
             </div>
           </div>
           <div className='mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 lg:gap-12 mt-12'>
-            <Card className='flex flex-col items-center text-center'>
-              <CardHeader className='flex flex-col items-center w-full'>
-                <div className='flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 mb-4 mx-auto'>
+            {[
+              {
+                icon: (
                   <Sparkles className='h-10 w-10 text-indigo-600 dark:text-indigo-400' />
-                </div>
-                <CardTitle className='text-center'>Създайте История</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Въведете творческа идея, изберете възрастовата група и стила
-                  на книгата.
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card className='flex flex-col items-center text-center'>
-              <CardHeader className='flex flex-col items-center w-full'>
-                <div className='flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 mb-4 mx-auto'>
+                ),
+                title: 'Създайте История',
+                description:
+                  'Въведете творческа идея, изберете възрастовата група и стила на книгата.',
+              },
+              {
+                icon: (
                   <Clock className='h-10 w-10 text-indigo-600 dark:text-indigo-400' />
-                </div>
-                <CardTitle className='text-center'>
-                  Изчакайте Генерирането
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Нашият AI ще създаде увлекателна история и красиви илюстрации
-                  само за няколко минути.
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card className='flex flex-col items-center text-center'>
-              <CardHeader className='flex flex-col items-center w-full'>
-                <div className='flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 mb-4 mx-auto'>
+                ),
+                title: 'Изчакайте Генерирането',
+                description:
+                  'Нашият AI ще създаде увлекателна история и красиви илюстрации само за няколко минути.',
+              },
+              {
+                icon: (
                   <BookOpen className='h-10 w-10 text-indigo-600 dark:text-indigo-400' />
-                </div>
-                <CardTitle className='text-center'>Получете Книгата</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Прегледайте, редактирайте и изтеглете вашата персонализирана
-                  книга или я споделете с близките.
-                </CardDescription>
-              </CardContent>
-            </Card>
+                ),
+                title: 'Получете Книгата',
+                description:
+                  'Прегледайте, редактирайте и изтеглете вашата персонализирана книга или я споделете с близките.',
+              },
+            ].map((feature, index) => (
+              <Card
+                key={index}
+                className='flex flex-col items-center text-center'
+              >
+                <CardHeader className='flex flex-col items-center w-full'>
+                  <div className='flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 mb-4 mx-auto'>
+                    {feature.icon}
+                  </div>
+                  <CardTitle className='text-center'>{feature.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>{feature.description}</CardDescription>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
@@ -136,7 +132,7 @@ export default function Home() {
                 Превърнете въображението си в красиви детски книги още днес.
               </p>
             </div>
-            <div className='flex flex-col gap-2 min-[400px]:flex-row'>
+            <div className='flex flex-col gap-2 min-[400px]:flex-row items-center justify-center'>
               <Link href='/create'>
                 <Button
                   size='lg'
