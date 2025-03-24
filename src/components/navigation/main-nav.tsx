@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { BookOpen, Star, UserCircle, LogIn } from 'lucide-react';
+import { BookOpen, Star, UserCircle } from 'lucide-react';
 
 interface NavItem {
   title: string;
@@ -33,18 +33,20 @@ export function MainNav() {
   const pathname = usePathname();
 
   return (
-    <nav className='flex items-center space-x-4'>
-      <Link href='/' className='flex items-center space-x-2'>
-        <BookOpen className='h-6 w-6' />
-        <span className='font-bold'>Вълшебна Книга</span>
-      </Link>
-      <div className='flex items-center space-x-1 sm:space-x-2'>
+    <div className='flex items-center justify-between w-full'>
+      <div className='flex-1 flex justify-start'>
+        <Link href='/' className='flex items-center space-x-2'>
+          <BookOpen className='h-6 w-6' />
+          <span className='font-bold'>Вълшебна Книга</span>
+        </Link>
+      </div>
+      <nav className='flex justify-center items-center space-x-8'>
         {navItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
             className={cn(
-              'flex items-center px-2 sm:px-3 py-2 text-sm font-medium transition-colors hover:text-primary',
+              'flex items-center px-4 py-2 text-sm font-medium transition-colors hover:text-primary',
               pathname === item.href ? 'text-primary' : 'text-muted-foreground'
             )}
           >
@@ -52,7 +54,10 @@ export function MainNav() {
             <span className='ml-1 hidden md:inline-block'>{item.title}</span>
           </Link>
         ))}
+      </nav>
+      <div className='flex-1'>
+        {/* Празно пространство в дясно за баланс */}
       </div>
-    </nav>
+    </div>
   );
 }

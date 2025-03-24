@@ -28,8 +28,8 @@ export function Header() {
           </Link>
         </div>
 
-        {/* Основна навигация (видима само на по-големи екрани) */}
-        <div className='hidden sm:block'>
+        {/* Основна навигация */}
+        <div className='hidden sm:flex flex-1 justify-center'>
           <MainNav />
         </div>
 
