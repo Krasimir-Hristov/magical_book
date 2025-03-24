@@ -1,7 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { BookOpen, Menu, Star, UserCircle, LogIn } from 'lucide-react';
+import {
+  BookOpen,
+  Menu,
+  Star,
+  UserCircle,
+  LogIn,
+  Info,
+  CreditCard,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -62,6 +70,28 @@ export function MobileNav() {
           >
             <BookOpen className='h-5 w-5' />
             <span>Моята Библиотека</span>
+          </Link>
+          <Link
+            href='/how-it-works'
+            className={cn(
+              'flex items-center justify-center gap-2 text-muted-foreground',
+              'px-2 py-2 text-lg hover:text-primary transition-colors'
+            )}
+            onClick={() => setOpen(false)}
+          >
+            <Info className='h-5 w-5' />
+            <span>Как Работи</span>
+          </Link>
+          <Link
+            href='/pricing'
+            className={cn(
+              'flex items-center justify-center gap-2 text-muted-foreground',
+              'px-2 py-2 text-lg hover:text-primary transition-colors'
+            )}
+            onClick={() => setOpen(false)}
+          >
+            <CreditCard className='h-5 w-5' />
+            <span>Ценоразпис</span>
           </Link>
           <Link
             href='/account'
