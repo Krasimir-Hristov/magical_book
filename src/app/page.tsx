@@ -13,6 +13,9 @@ import {
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { FloatingBooks, MagicalDecorations } from '@/components/ui/decorations';
+import { BooksList } from '@/components/books-list';
 
 interface Book {
   id: string;
@@ -75,6 +78,13 @@ const dummyBooks: Book[] = [
   },
 ];
 
+// Статистики за приложението
+const stats = {
+  totalBooks: '1500+',
+  totalCreators: '350+',
+  avgCreationTime: '5 мин.',
+};
+
 export default function Home() {
   const { isLoggedIn } = useAuth();
   const [books, setBooks] = useState<Book[]>([]);
@@ -117,214 +127,337 @@ export default function Home() {
   if (loading) {
     return (
       <div className='flex items-center justify-center min-h-screen'>
-        <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600'></div>
+        <motion.div
+          className='h-12 w-12 border-b-2 border-indigo-600 rounded-full'
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+        />
       </div>
     );
   }
 
   return (
-    <div className='flex flex-col'>
-      {/* Hero Section */}
-      <section className='w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800'>
-        <div className='container px-4 md:px-6'>
-          <div className='flex flex-col items-center justify-center space-y-4 text-center'>
-            <div className='space-y-2'>
-              <h1 className='text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl'>
-                {isLoggedIn
-                  ? 'Разгледайте Книги от Други Автори'
-                  : 'Създайте Магически Детски Книги с AI'}
-              </h1>
-              <p className='max-w-[600px] text-muted-foreground md:text-xl mx-auto'>
-                {isLoggedIn
-                  ? 'Открийте вълнуващи истории, създадени от нашата общност от автори.'
-                  : 'Трансформирайте своите идеи в красиви детски книги за минути с помощта на изкуствен интелект.'}
-              </p>
-            </div>
-            <div className='flex flex-col gap-2 min-[400px]:flex-row items-center justify-center'>
-              <Button
-                size='lg'
-                className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
-                onClick={() => handleProtectedRoute('/create')}
-              >
-                {isLoggedIn ? 'Създайте Своя Книга' : 'Започни Сега'}
-              </Button>
-              <Button
-                size='lg'
-                variant='outline'
-                onClick={() => handleProtectedRoute('/library')}
-              >
-                {isLoggedIn ? 'Моята Библиотека' : 'Регистрирай се'}
-              </Button>
-            </div>
-          </div>
+    <div className='relative'>
+      {/* Hero section */}
+      <section className='relative overflow-hidden py-20 md:py-32 bg-gradient-to-b from-indigo-600 to-violet-800'>
+        <div className='absolute inset-0 z-0 opacity-30'>
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzR2LTRoLTJ2NGgtNHYyaDR2NGgydi00aDR2LTJoLTR6bTAtMzBWMGgtMnY0aC00djJoNHY0aDJWNmg0VjRoLTR6TTYgMzR2LTRINHY0SDB2Mmg0djRoMnYtNGg0di0ySDZ6TTYgNFYwSDR2NEgwdjJoNHY0aDJWNmg0VjRINnoiLz48L2c+PC9nPjwvc3ZnPg==')]"></div>
         </div>
-      </section>
+        <MagicalDecorations />
 
-      {/* Books Grid Section */}
-      <section className='w-full py-12 md:py-24 lg:py-32'>
-        <div className='container px-4 md:px-6'>
-          <h2 className='text-2xl md:text-3xl font-bold text-center mb-8'>
-            {isLoggedIn
-              ? 'Книги от нашата общност'
-              : 'Популярни книги от нашата платформа'}
-          </h2>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-            {books.map((book) => (
-              <div
-                key={book.id}
-                className='bg-white border rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden'
-                style={{
-                  height: '400px',
-                  display: 'grid',
-                  gridTemplateRows: 'auto auto 1fr auto',
-                }}
+        <div className='container relative z-10 mx-auto px-4'>
+          <div className='grid gap-12 md:grid-cols-2 items-center'>
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, type: 'spring' }}
+            >
+              <h1 className='text-4xl md:text-6xl font-bold mb-6 text-white font-fancy'>
+                Създайте Магически Детски Книги с AI
+              </h1>
+              <p className='text-xl md:text-2xl mb-8 text-purple-50'>
+                Превърнете вашите идеи в красиви, интерактивни детски книги само
+                за няколко минути.
+              </p>
+              <motion.div
+                className='flex flex-col sm:flex-row gap-4'
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
               >
-                {/* Изображение - фиксирана височина */}
-                <div style={{ height: '160px' }}>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button
+                    size='lg'
+                    className='bg-white text-purple-700 hover:bg-purple-50 shadow-lg'
+                    onClick={() => handleProtectedRoute('/create')}
+                  >
+                    Създай Книга
+                  </Button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button
+                    variant='outline'
+                    size='lg'
+                    className='bg-transparent border-white text-white hover:bg-white/10'
+                  >
+                    <Link href='/how-it-works'>Научи Повече</Link>
+                  </Button>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              className='relative'
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className='relative mx-auto max-w-md'>
+                <motion.div
+                  className='absolute -top-6 -left-8 w-28 h-36 rounded-lg shadow-xl z-10 bg-white p-1 transform -rotate-6'
+                  animate={{ rotate: [-6, -4, -6], y: [0, -5, 0] }}
+                  transition={{
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                >
                   <img
-                    src={book.coverUrl}
-                    alt={book.title}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                    }}
+                    src='/aiavatar.png'
+                    alt='Book Cover'
+                    className='w-full h-full object-cover rounded-md'
+                  />
+                </motion.div>
+
+                <div className='relative z-20 bg-white rounded-xl overflow-hidden shadow-2xl transform rotate-3'>
+                  <img
+                    src='/sample-book-page.webp'
+                    alt='Book Sample'
+                    className='w-full h-auto'
                   />
                 </div>
 
-                {/* Заглавие и дата - фиксирана височина */}
-                <div className='p-4 pb-2'>
-                  <h3 className='text-lg font-semibold truncate'>
-                    {book.title}
-                  </h3>
-                  <p className='text-sm text-gray-500'>
-                    Автор: {book.authorName}
-                  </p>
-                </div>
-
-                {/* Допълнителна информация - раздел с разширяемо съдържание */}
-                <div className='p-4 pt-0 overflow-hidden'>
-                  <div className='flex justify-between items-center text-sm text-gray-500'>
-                    <span>Възраст: {book.ageRange}</span>
-                    <span>{book.createdAt}</span>
-                  </div>
-                </div>
-
-                {/* Бутони - фиксирана височина в долната част */}
-                <div className='p-4 border-t'>
-                  <Button
-                    className='w-full'
-                    variant='outline'
-                    onClick={() => handleReadBook(book.id)}
-                  >
-                    {isLoggedIn ? 'Прочети' : 'Влез за да четеш'}
-                  </Button>
-                </div>
+                <motion.div
+                  className='absolute -bottom-4 -right-8 w-32 h-36 rounded-lg shadow-xl z-10 bg-white p-1 transform rotate-6'
+                  animate={{ rotate: [6, 4, 6], y: [0, 5, 0] }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                    delay: 0.5,
+                  }}
+                >
+                  <img
+                    src='/aiavatar.png'
+                    alt='Book Cover'
+                    className='w-full h-full object-cover rounded-md'
+                  />
+                </motion.div>
               </div>
-            ))}
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {!isLoggedIn && (
-        <>
-          {/* Features Section */}
-          <section className='w-full py-12 md:py-24 lg:py-32'>
-            <div className='container px-4 md:px-6'>
-              <div className='flex flex-col items-center justify-center space-y-4 text-center'>
-                <div className='space-y-2'>
-                  <h2 className='text-3xl font-bold tracking-tighter md:text-4xl'>
-                    Как Работи
-                  </h2>
-                  <p className='max-w-[900px] text-muted-foreground md:text-xl/relaxed'>
-                    Нашата платформа използва последните технологии в
-                    изкуствения интелект, за да превърне вашите идеи в
-                    персонализирани детски истории.
-                  </p>
-                </div>
-              </div>
-              <div className='mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 lg:gap-12 mt-12'>
-                {[
-                  {
-                    icon: (
-                      <Sparkles className='h-10 w-10 text-indigo-600 dark:text-indigo-400' />
-                    ),
-                    title: 'Създайте История',
-                    description:
-                      'Въведете творческа идея, изберете възрастовата група и стила на книгата.',
-                  },
-                  {
-                    icon: (
-                      <Clock className='h-10 w-10 text-indigo-600 dark:text-indigo-400' />
-                    ),
-                    title: 'Изчакайте Генерирането',
-                    description:
-                      'Нашият AI ще създаде увлекателна история и красиви илюстрации само за няколко минути.',
-                  },
-                  {
-                    icon: (
-                      <BookOpen className='h-10 w-10 text-indigo-600 dark:text-indigo-400' />
-                    ),
-                    title: 'Получете Книгата',
-                    description:
-                      'Прегледайте, редактирайте и изтеглете вашата персонализирана книга или я споделете с близките.',
-                  },
-                ].map((feature, index) => (
-                  <Card
-                    key={index}
-                    className='flex flex-col items-center text-center'
-                  >
-                    <CardHeader className='flex flex-col items-center w-full'>
-                      <div className='flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 mb-4 mx-auto'>
-                        {feature.icon}
-                      </div>
-                      <CardTitle className='text-center'>
-                        {feature.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription>{feature.description}</CardDescription>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </section>
+      {/* Статистики */}
+      <motion.section
+        className='py-16 bg-gradient-to-r from-indigo-50 to-purple-50 relative'
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+      >
+        <div className='container mx-auto max-w-5xl px-4'>
+          <h2 className='text-3xl font-bold text-center mb-12 text-indigo-900'>
+            Нашата AI Платформа в Числа
+          </h2>
 
-          {/* CTA Section */}
-          <section className='w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950'>
-            <div className='container px-4 md:px-6'>
-              <div className='flex flex-col items-center justify-center space-y-4 text-center'>
-                <div className='space-y-2'>
-                  <h2 className='text-3xl font-bold tracking-tighter md:text-4xl'>
-                    Готови ли сте да започнете?
-                  </h2>
-                  <p className='max-w-[600px] text-muted-foreground md:text-xl/relaxed'>
-                    Превърнете въображението си в красиви детски книги още днес.
-                  </p>
-                </div>
-                <div className='flex flex-col gap-2 min-[400px]:flex-row items-center justify-center'>
-                  <Button
-                    size='lg'
-                    className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
-                    onClick={() => router.push('/login')}
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+            {Object.entries(stats).map(
+              ([key, value]: [string, string], index) => (
+                <motion.div
+                  key={key}
+                  className='bg-white flex flex-col items-center p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300'
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                >
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1, rotate: [0, 5, 0] }}
+                    transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
+                    className='mb-4'
                   >
-                    Създай Книга Сега
-                  </Button>
-                  <Button
-                    size='lg'
-                    variant='outline'
-                    onClick={() => router.push('/login')}
-                  >
-                    <CreditCard className='mr-2 h-4 w-4' />
-                    Купи Токени
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </section>
-        </>
-      )}
+                    {index === 0 && (
+                      <BookOpen className='h-10 w-10 text-indigo-600' />
+                    )}
+                    {index === 1 && (
+                      <Sparkles className='h-10 w-10 text-indigo-600' />
+                    )}
+                    {index === 2 && (
+                      <Clock className='h-10 w-10 text-indigo-600' />
+                    )}
+                  </motion.div>
+                  <h3 className='text-xl font-semibold mb-1 text-center'>
+                    {key === 'totalBooks' && 'Създадени Книги'}
+                    {key === 'totalCreators' && 'Активни Създатели'}
+                    {key === 'avgCreationTime' && 'Средно Време за Създаване'}
+                  </h3>
+                  <p className='text-3xl font-bold text-indigo-600'>{value}</p>
+                </motion.div>
+              )
+            )}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Книги */}
+      <section className='py-16 bg-gradient-to-b from-background to-indigo-50/25'>
+        <div className='container mx-auto max-w-5xl px-4'>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className='mb-12 text-center'
+          >
+            <h2 className='text-3xl font-bold mb-4 text-indigo-900'>
+              {isLoggedIn
+                ? 'Книги от нашата общност'
+                : 'Популярни детски книги'}
+            </h2>
+            <p className='text-muted-foreground text-lg max-w-2xl mx-auto'>
+              Разгледайте селекция от въображаеми истории, създадени с нашата AI
+              платформа.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <BooksList books={books} showDeleteButton={false} />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Как работи */}
+      <motion.section
+        className='py-20 bg-gradient-to-b from-indigo-50/25 to-white relative overflow-hidden'
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <FloatingBooks />
+
+        <div className='container mx-auto max-w-5xl px-4 relative z-10'>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className='mb-12 text-center'
+          >
+            <h2 className='text-3xl font-bold mb-4 text-indigo-900'>
+              Как Работи Нашата Платформа
+            </h2>
+            <p className='text-muted-foreground text-lg max-w-2xl mx-auto'>
+              Създаването на вълшебна детска книга никога не е било толкова
+              лесно!
+            </p>
+          </motion.div>
+
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+            {[
+              {
+                icon: <Sparkles className='h-10 w-10 text-indigo-600' />,
+                title: 'Създайте История',
+                description:
+                  'Въведете творческа идея, изберете възрастова група и стил на книгата.',
+              },
+              {
+                icon: <Clock className='h-10 w-10 text-indigo-600' />,
+                title: 'Изчакайте Генерирането',
+                description:
+                  'Нашият AI ще създаде увлекателна история и красиви илюстрации само за няколко минути.',
+              },
+              {
+                icon: <BookOpen className='h-10 w-10 text-indigo-600' />,
+                title: 'Получете Книгата',
+                description:
+                  'Прегледайте, редактирайте и изтеглете вашата персонализирана книга или я споделете с близките.',
+              },
+            ].map((step, index) => (
+              <motion.div
+                key={index}
+                className='bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center'
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              >
+                <motion.div
+                  className='h-20 w-20 rounded-full bg-indigo-100 flex items-center justify-center mb-6'
+                  whileHover={{ rotate: 10, scale: 1.05 }}
+                >
+                  {step.icon}
+                </motion.div>
+                <h3 className='text-xl font-semibold mb-3'>{step.title}</h3>
+                <p className='text-muted-foreground'>{step.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* CTA */}
+      <motion.section
+        className='py-16 bg-gradient-to-r from-indigo-600 to-violet-700 text-white'
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <div className='container mx-auto max-w-3xl px-4 text-center'>
+          <motion.h2
+            className='text-3xl md:text-4xl font-bold mb-6'
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            Готови ли сте да създадете вашата първа книга?
+          </motion.h2>
+
+          <motion.p
+            className='text-xl text-indigo-100 mb-8'
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            Регистрирайте се сега и започнете да създавате вълшебни истории за
+            вашите деца.
+          </motion.p>
+
+          <motion.div
+            className='flex flex-col sm:flex-row gap-4 justify-center'
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                size='lg'
+                className='bg-white text-indigo-700 hover:bg-indigo-50'
+                onClick={() => handleProtectedRoute('/create')}
+              >
+                Започни Сега
+              </Button>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                variant='outline'
+                size='lg'
+                className='border-white text-white hover:bg-white/10'
+              >
+                <CreditCard className='mr-2 h-4 w-4' />
+                Научи Повече
+              </Button>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
     </div>
   );
 }
