@@ -57,13 +57,6 @@ export function MainNav() {
             <span className='ml-1 hidden md:inline-block'>{item.title}</span>
           </Link>
         ))}
-        <Link
-          href='/login'
-          className='flex items-center px-2 sm:px-3 py-2 text-sm font-medium transition-colors hover:text-primary text-muted-foreground'
-        >
-          <LogIn className='h-5 w-5' />
-          <span className='ml-1 hidden md:inline-block'>Вход</span>
-        </Link>
       </div>
     </nav>
   );
