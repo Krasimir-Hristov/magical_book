@@ -13,22 +13,22 @@ export function MobileNav() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant='ghost' size='icon' className='md:hidden'>
+        <Button variant='ghost' size='icon' className='sm:hidden'>
           <Menu className='h-5 w-5' />
           <span className='sr-only'>Отвори меню</span>
         </Button>
       </SheetTrigger>
       <SheetContent side='left' className='pr-0'>
-        <div className='flex items-center space-x-2'>
-          <BookOpen className='h-6 w-6' />
-          <span className='font-bold'>Вълшебна Книга</span>
+        <div className='flex items-center justify-center mb-6'>
+          <BookOpen className='h-6 w-6 mr-2' />
+          <span className='font-bold text-xl'>Вълшебна Книга</span>
         </div>
-        <nav className='mt-8 flex flex-col gap-4'>
+        <nav className='flex flex-col gap-4'>
           <Link
             href='/'
             className={cn(
-              'flex items-center gap-2 text-muted-foreground',
-              'px-2 py-1 text-lg'
+              'flex items-center justify-center gap-2 text-muted-foreground',
+              'px-2 py-2 text-lg hover:text-primary transition-colors'
             )}
             onClick={() => setOpen(false)}
           >
@@ -38,8 +38,8 @@ export function MobileNav() {
           <Link
             href='/create'
             className={cn(
-              'flex items-center gap-2 text-muted-foreground',
-              'px-2 py-1 text-lg'
+              'flex items-center justify-center gap-2 text-muted-foreground',
+              'px-2 py-2 text-lg hover:text-primary transition-colors'
             )}
             onClick={() => setOpen(false)}
           >
@@ -49,8 +49,8 @@ export function MobileNav() {
           <Link
             href='/library'
             className={cn(
-              'flex items-center gap-2 text-muted-foreground',
-              'px-2 py-1 text-lg'
+              'flex items-center justify-center gap-2 text-muted-foreground',
+              'px-2 py-2 text-lg hover:text-primary transition-colors'
             )}
             onClick={() => setOpen(false)}
           >
@@ -60,8 +60,8 @@ export function MobileNav() {
           <Link
             href='/account'
             className={cn(
-              'flex items-center gap-2 text-muted-foreground',
-              'px-2 py-1 text-lg'
+              'flex items-center justify-center gap-2 text-muted-foreground',
+              'px-2 py-2 text-lg hover:text-primary transition-colors'
             )}
             onClick={() => setOpen(false)}
           >
@@ -71,8 +71,8 @@ export function MobileNav() {
           <Link
             href='/login'
             className={cn(
-              'flex items-center gap-2 text-muted-foreground',
-              'px-2 py-1 text-lg'
+              'flex items-center justify-center gap-2 text-muted-foreground',
+              'px-2 py-2 text-lg hover:text-primary transition-colors'
             )}
             onClick={() => setOpen(false)}
           >

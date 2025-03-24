@@ -38,31 +38,31 @@ export function MainNav() {
   const pathname = usePathname();
 
   return (
-    <nav className='flex items-center space-x-6 lg:space-x-8'>
-      <Link href='/' className='hidden items-center space-x-2 lg:flex'>
+    <nav className='flex items-center space-x-4'>
+      <Link href='/' className='flex items-center space-x-2'>
         <BookOpen className='h-6 w-6' />
-        <span className='hidden font-bold lg:inline-block'>Вълшебна Книга</span>
+        <span className='font-bold hidden sm:inline-block'>Вълшебна Книга</span>
       </Link>
-      <div className='flex items-center space-x-2'>
+      <div className='flex items-center space-x-1 sm:space-x-2'>
         {navItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
             className={cn(
-              'flex items-center px-3 py-2 text-sm font-medium transition-colors hover:text-primary',
+              'flex items-center px-2 sm:px-3 py-2 text-sm font-medium transition-colors hover:text-primary',
               pathname === item.href ? 'text-primary' : 'text-muted-foreground'
             )}
           >
             {item.icon}
-            <span className='ml-2 hidden md:inline-block'>{item.title}</span>
+            <span className='ml-1 hidden md:inline-block'>{item.title}</span>
           </Link>
         ))}
         <Link
           href='/login'
-          className='flex items-center px-3 py-2 text-sm font-medium transition-colors hover:text-primary text-muted-foreground'
+          className='flex items-center px-2 sm:px-3 py-2 text-sm font-medium transition-colors hover:text-primary text-muted-foreground'
         >
           <LogIn className='h-5 w-5' />
-          <span className='ml-2 hidden md:inline-block'>Вход</span>
+          <span className='ml-1 hidden md:inline-block'>Вход</span>
         </Link>
       </div>
     </nav>
