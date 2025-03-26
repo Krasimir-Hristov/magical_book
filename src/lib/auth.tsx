@@ -17,6 +17,7 @@ interface AuthContextType {
   user: User | null;
   login: () => void;
   logout: () => void;
+  isLoading: boolean;
 }
 
 const defaultContext: AuthContextType = {
@@ -26,6 +27,7 @@ const defaultContext: AuthContextType = {
   user: null,
   login: () => {},
   logout: () => {},
+  isLoading: true,
 };
 
 const AuthContext = createContext<AuthContextType>(defaultContext);
@@ -41,6 +43,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [userName, setUserName] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const supabase = createClientSide();
 
@@ -48,6 +51,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
+        setIsLoading(true);
         // Проверка на сесията чрез Supabase
         const {
           data: { session },
@@ -59,7 +63,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
           return;
         }
 
+        console.log('Текуща сесия:', session ? 'Активна' : 'Неактивна');
+
         if (session) {
+          console.log('Потребителски данни:', session.user);
+          console.log('Метаданни:', session.user.user_metadata);
+
           setIsLoggedIn(true);
           setUser(session.user);
 
@@ -79,6 +88,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
       } catch (error) {
         console.error('Грешка при проверка на сесията:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -90,7 +101,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const {
         data: { subscription },
       } = supabase.auth.onAuthStateChange((event, session) => {
+        console.log('Auth събитие:', event);
+
         if (event === 'SIGNED_IN' && session) {
+          console.log('Потребител влезе:', session.user.email);
+          console.log('Метаданни при SIGNED_IN:', session.user.user_metadata);
+
           setIsLoggedIn(true);
           setUser(session.user);
 
@@ -108,6 +124,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
 
         if (event === 'SIGNED_OUT') {
+          console.log('Потребителят излезе');
           setIsLoggedIn(false);
           setUserName('');
           setUserAvatar('');
@@ -153,6 +170,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     user,
     login,
     logout,
+    isLoading,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
