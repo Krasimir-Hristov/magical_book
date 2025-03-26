@@ -55,6 +55,7 @@ export default function CreateBookPage() {
   const [formData, setFormData] = useState({
     theme: '',
     title: '',
+    author: '',
     ageGroup: '',
     coverStyle: '',
   });
@@ -129,6 +130,16 @@ export default function CreateBookPage() {
                     value={formData.title}
                     onChange={handleChange}
                     placeholder='Въведете заглавие на книгата'
+                  />
+                </div>
+                <div className='grid gap-2'>
+                  <Label htmlFor='author'>Автор</Label>
+                  <Input
+                    id='author'
+                    name='author'
+                    value={formData.author}
+                    onChange={handleChange}
+                    placeholder='Въведете име на автора'
                   />
                 </div>
                 <div className='grid gap-2'>
