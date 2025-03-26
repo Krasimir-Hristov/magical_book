@@ -18,8 +18,23 @@ import { useAuth } from '@/lib/auth';
 import { motion } from 'framer-motion';
 
 export function Header() {
-  const { isLoggedIn, userName, logout } = useAuth();
+  const { isLoggedIn, userName, userAvatar, logout } = useAuth();
   const [scrolled, setScrolled] = useState(false);
+
+  // Функция за извличане на инициали от името
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map((part) => part.charAt(0))
+      .join('')
+      .substring(0, 2)
+      .toUpperCase();
+  };
+
+  // Функция за извличане на първото име
+  const getFirstName = (name: string) => {
+    return name.split(' ')[0] || 'Потребител';
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,15 +87,23 @@ export function Header() {
           {isLoggedIn ? (
             <motion.div
               className='flex items-center'
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
+              <div className='hidden sm:flex items-center mr-2'>
+                <span className='text-sm text-muted-foreground'>
+                  Добре дошъл,
+                </span>
+                <span className='ml-1 font-medium'>
+                  {getFirstName(userName)}
+                </span>
+              </div>
               <DropdownMenu>
                 <DropdownMenuTrigger className='overflow-hidden rounded-full'>
                   <Avatar className='h-8 w-8'>
-                    <AvatarImage src='/placeholder-avatar.jpg' alt={userName} />
+                    <AvatarImage src={userAvatar} alt={userName} />
                     <AvatarFallback>
-                      {userName && userName.substring(0, 2).toUpperCase()}
+                      {getInitials(userName || 'User')}
                     </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
