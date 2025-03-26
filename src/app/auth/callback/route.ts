@@ -1,27 +1,20 @@
-import { NextResponse } from 'next/server';
-import { createServerSide } from '@/lib/supabase/server';
+import { createServerClient } from '@/lib/supabase/server';
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
-  const code = searchParams.get('code');
-  const next = searchParams.get('next') ?? '/';
+export async function GET(req: NextRequest) {
+  const requestUrl = new URL(req.url);
+  const code = requestUrl.searchParams.get('code');
 
+  // Проверяваме дали имаме код от OAuth доставчика
   if (code) {
-    const supabase = await createServerSide();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
-      const forwardedHost = request.headers.get('x-forwarded-host');
-      const isLocalEnv = process.env.NODE_ENV === 'development';
+    const cookieStore = cookies();
+    const supabase = createServerClient();
 
-      if (isLocalEnv) {
-        return NextResponse.redirect(`${origin}${next}`);
-      } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${next}`);
-      } else {
-        return NextResponse.redirect(`${origin}${next}`);
-      }
-    }
+    // Обработка на OAuth callback и създаване на сесия
+    await supabase.auth.exchangeCodeForSession(code);
   }
 
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  // Пренасочване към началната страница след автентикация
+  return NextResponse.redirect(new URL('/', req.url));
 }

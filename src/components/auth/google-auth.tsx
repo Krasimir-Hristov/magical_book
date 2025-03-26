@@ -10,7 +10,7 @@ export default function GoogleAuthComponent() {
 
   const handleGoogleLogin = async () => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
@@ -23,6 +23,8 @@ export default function GoogleAuthComponent() {
 
       if (error) {
         console.error('Грешка при вход с Google:', error.message);
+      } else {
+        console.log('Успешно пренасочване към Google OAuth', data);
       }
     } catch (error) {
       console.error('Грешка:', error);
