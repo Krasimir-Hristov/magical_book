@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import { Loader2 } from 'lucide-react';
@@ -49,16 +49,21 @@ const coverStyles = [
 ];
 
 export default function CreateBookPage() {
-  const { isLoggedIn } = useAuth();
   const router = useRouter();
+  const { isLoggedIn } = useAuth();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
+    theme: '',
     title: '',
-    prompt: '',
-    ageRange: '',
-    genre: '',
+    ageGroup: '',
     coverStyle: '',
   });
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push('/login');
+    }
+  }, [isLoggedIn, router]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -76,25 +81,16 @@ export default function CreateBookPage() {
     setLoading(true);
 
     try {
-      // Симулираме създаване на книга
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // В реалността тук ще се изпрати заявка към API
-      console.log('Създаване на книга:', formData);
-
-      // Пренасочваме към библиотеката след успешно създаване
-      router.push('/library');
+      // Тук ще добавим логиката за генериране на книгата
+      console.log('Генериране на книга със следните параметри:', formData);
     } catch (error) {
-      console.error('Грешка при създаване на книга:', error);
+      console.error('Грешка при генериране на книгата:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  // Проверяваме дали потребителят е логнат
   if (!isLoggedIn) {
-    // Ако не е логнат, го пренасочваме към страницата за вход
-    router.push('/login');
     return null;
   }
 
@@ -113,96 +109,76 @@ export default function CreateBookPage() {
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className='space-y-6'>
-              <div className='space-y-2'>
-                <Label htmlFor='title'>Заглавие на книгата</Label>
-                <Input
-                  id='title'
-                  name='title'
-                  placeholder='Въведете заглавие'
-                  value={formData.title}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                <div className='space-y-2'>
-                  <Label htmlFor='ageRange'>Възрастова група</Label>
+              <div className='grid gap-4'>
+                <div className='grid gap-2'>
+                  <Label htmlFor='theme'>Тема на книгата</Label>
+                  <Textarea
+                    id='theme'
+                    name='theme'
+                    value={formData.theme}
+                    onChange={handleChange}
+                    placeholder='Например: Приключения в космоса, където малко момиче открива нови планети и се сприятелява с извънземни създания.'
+                    className='min-h-[120px]'
+                  />
+                </div>
+                <div className='grid gap-2'>
+                  <Label htmlFor='title'>Заглавие</Label>
+                  <Input
+                    id='title'
+                    name='title'
+                    value={formData.title}
+                    onChange={handleChange}
+                    placeholder='Въведете заглавие на книгата'
+                  />
+                </div>
+                <div className='grid gap-2'>
+                  <Label htmlFor='ageGroup'>Възрастова група</Label>
                   <Select
-                    value={formData.ageRange}
+                    value={formData.ageGroup}
                     onValueChange={(value) =>
-                      handleSelectChange('ageRange', value)
+                      handleSelectChange('ageGroup', value)
                     }
                   >
-                    <SelectTrigger id='ageRange'>
+                    <SelectTrigger>
                       <SelectValue placeholder='Изберете възрастова група' />
                     </SelectTrigger>
                     <SelectContent>
-                      {ageRanges.map((range) => (
-                        <SelectItem key={range.value} value={range.value}>
-                          {range.label}
-                        </SelectItem>
-                      ))}
+                      <SelectItem value='2-4'>2-4 години</SelectItem>
+                      <SelectItem value='5-7'>5-7 години</SelectItem>
+                      <SelectItem value='8-12'>8-12 години</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-
-                <div className='space-y-2'>
-                  <Label htmlFor='genre'>Жанр</Label>
+                <div className='grid gap-2'>
+                  <Label htmlFor='coverStyle'>Стил на корицата</Label>
                   <Select
-                    value={formData.genre}
+                    value={formData.coverStyle}
                     onValueChange={(value) =>
-                      handleSelectChange('genre', value)
+                      handleSelectChange('coverStyle', value)
                     }
                   >
-                    <SelectTrigger id='genre'>
-                      <SelectValue placeholder='Изберете жанр' />
+                    <SelectTrigger>
+                      <SelectValue placeholder='Изберете стил на корицата' />
                     </SelectTrigger>
                     <SelectContent>
-                      {genres.map((genre) => (
-                        <SelectItem key={genre.value} value={genre.value}>
-                          {genre.label}
-                        </SelectItem>
-                      ))}
+                      <SelectItem value='cartoon'>Анимационен</SelectItem>
+                      <SelectItem value='watercolor'>Акварел</SelectItem>
+                      <SelectItem value='realistic'>Реалистичен</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
 
-              <div className='space-y-2'>
-                <Label htmlFor='coverStyle'>Стил на корицата</Label>
-                <Select
-                  value={formData.coverStyle}
-                  onValueChange={(value) =>
-                    handleSelectChange('coverStyle', value)
-                  }
-                >
-                  <SelectTrigger id='coverStyle'>
-                    <SelectValue placeholder='Изберете стил' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {coverStyles.map((style) => (
-                      <SelectItem key={style.value} value={style.value}>
-                        {style.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className='space-y-2'>
-                <Label htmlFor='prompt'>
-                  Описание на историята (бъдете колкото се може по-конкретни)
-                </Label>
-                <Textarea
-                  id='prompt'
-                  name='prompt'
-                  placeholder='Опишете историята, която искате да създадете. Например: "Малкото мече Бруно се губи в гората и трябва да намери пътя към дома си с помощта на горските животни."'
-                  className='min-h-[120px]'
-                  value={formData.prompt}
-                  onChange={handleChange}
-                  required
-                />
+              <div className='mt-8 p-6 border rounded-lg bg-white/50 shadow-sm'>
+                <h3 className='text-lg font-medium mb-4 text-indigo-800'>
+                  Съвети за създаване на добра книга:
+                </h3>
+                <ul className='list-disc list-inside space-y-2 text-gray-700'>
+                  <li>Бъдете конкретни в описанието на темата</li>
+                  <li>Помислете за основното послание или поука</li>
+                  <li>Използвайте въображение и забавни елементи</li>
+                  <li>Съобразете сложността с избраната възрастова група</li>
+                </ul>
               </div>
             </CardContent>
             <CardFooter className='flex justify-between'>
@@ -226,19 +202,6 @@ export default function CreateBookPage() {
             </CardFooter>
           </form>
         </Card>
-
-        <div className='mt-8 p-6 border rounded-lg bg-white shadow-md'>
-          <h3 className='text-lg font-medium mb-4 text-indigo-800'>
-            Съвети за създаване на добра книга:
-          </h3>
-          <ul className='list-disc list-inside space-y-2 text-gray-700'>
-            <li>Бъдете конкретни в описанието на историята</li>
-            <li>Включете главни герои с ясни характеристики</li>
-            <li>Помислете за основното послание или поука</li>
-            <li>Използвайте въображение и забавни елементи</li>
-            <li>Съобразете сложността с избраната възрастова група</li>
-          </ul>
-        </div>
       </div>
     </div>
   );
