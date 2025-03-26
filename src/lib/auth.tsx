@@ -93,50 +93,48 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     };
 
-    // Проверяваме само в браузъра, не по време на SSR
-    if (typeof window !== 'undefined') {
-      checkAuthStatus();
+    // Премахваме проверката за window, която причинява хидратационната грешка
+    checkAuthStatus();
 
-      // Настройка на слушател за промени в автентикацията
-      const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange((event, session) => {
-        console.log('Auth събитие:', event);
+    // Настройка на слушател за промени в автентикацията
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth събитие:', event);
 
-        if (event === 'SIGNED_IN' && session) {
-          console.log('Потребител влезе:', session.user.email);
-          console.log('Метаданни при SIGNED_IN:', session.user.user_metadata);
+      if (event === 'SIGNED_IN' && session) {
+        console.log('Потребител влезе:', session.user.email);
+        console.log('Метаданни при SIGNED_IN:', session.user.user_metadata);
 
-          setIsLoggedIn(true);
-          setUser(session.user);
+        setIsLoggedIn(true);
+        setUser(session.user);
 
-          const displayName =
-            session.user.user_metadata?.full_name ||
-            session.user.user_metadata?.name ||
-            'Потребител';
-          setUserName(displayName);
+        const displayName =
+          session.user.user_metadata?.full_name ||
+          session.user.user_metadata?.name ||
+          'Потребител';
+        setUserName(displayName);
 
-          const avatar =
-            session.user.user_metadata?.avatar_url ||
-            session.user.user_metadata?.picture ||
-            '/placeholder-avatar.jpg';
-          setUserAvatar(avatar);
-        }
+        const avatar =
+          session.user.user_metadata?.avatar_url ||
+          session.user.user_metadata?.picture ||
+          '/placeholder-avatar.jpg';
+        setUserAvatar(avatar);
+      }
 
-        if (event === 'SIGNED_OUT') {
-          console.log('Потребителят излезе');
-          setIsLoggedIn(false);
-          setUserName('');
-          setUserAvatar('');
-          setUser(null);
-        }
-      });
+      if (event === 'SIGNED_OUT') {
+        console.log('Потребителят излезе');
+        setIsLoggedIn(false);
+        setUserName('');
+        setUserAvatar('');
+        setUser(null);
+      }
+    });
 
-      // Почистване на слушателя при размонтиране
-      return () => {
-        subscription.unsubscribe();
-      };
-    }
+    // Почистване на слушателя при размонтиране
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   // Функция за логване
