@@ -15,9 +15,12 @@ interface AuthContextType {
   userName: string;
   userAvatar: string;
   user: User | null;
-  login: () => void;
   logout: () => void;
   isLoading: boolean;
+}
+
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
 const defaultContext: AuthContextType = {
@@ -25,7 +28,6 @@ const defaultContext: AuthContextType = {
   userName: '',
   userAvatar: '',
   user: null,
-  login: () => {},
   logout: () => {},
   isLoading: true,
 };
@@ -33,10 +35,6 @@ const defaultContext: AuthContextType = {
 const AuthContext = createContext<AuthContextType>(defaultContext);
 
 export const useAuth = () => useContext(AuthContext);
-
-interface AuthProviderProps {
-  children: ReactNode;
-}
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -47,12 +45,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const supabase = createClientSide();
 
-  // Проверяваме дали потребителят е логнат при инициализиране
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
         setIsLoading(true);
-        // Проверка на сесията чрез Supabase
         const {
           data: { session },
           error,
@@ -63,23 +59,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
           return;
         }
 
-        console.log('Текуща сесия:', session ? 'Активна' : 'Неактивна');
-
         if (session) {
-          console.log('Потребителски данни:', session.user);
-          console.log('Метаданни:', session.user.user_metadata);
-
           setIsLoggedIn(true);
           setUser(session.user);
 
-          // Извличане на потребителско име от потребителските метаданни
+          // Извличане на потребителско име
           const displayName =
             session.user.user_metadata?.full_name ||
             session.user.user_metadata?.name ||
             'Потребител';
           setUserName(displayName);
 
-          // Извличане на аватар от потребителските метаданни
+          // Извличане на аватар
           const avatar =
             session.user.user_metadata?.avatar_url ||
             session.user.user_metadata?.picture ||
@@ -93,19 +84,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     };
 
-    // Премахваме проверката за window, която причинява хидратационната грешка
     checkAuthStatus();
 
-    // Настройка на слушател за промени в автентикацията
+    // Слушател за промени в автентикацията
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('Auth събитие:', event);
-
       if (event === 'SIGNED_IN' && session) {
-        console.log('Потребител влезе:', session.user.email);
-        console.log('Метаданни при SIGNED_IN:', session.user.user_metadata);
-
         setIsLoggedIn(true);
         setUser(session.user);
 
@@ -123,7 +108,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       if (event === 'SIGNED_OUT') {
-        console.log('Потребителят излезе');
         setIsLoggedIn(false);
         setUserName('');
         setUserAvatar('');
@@ -131,18 +115,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     });
 
-    // Почистване на слушателя при размонтиране
     return () => {
       subscription.unsubscribe();
     };
   }, []);
-
-  // Функция за логване
-  const login = async () => {
-    // Тази функция може да се използва за други методи за вход,
-    // но за Google вход използваме директно компонента GoogleAuthComponent
-    console.log('Използвайте компонента за Google вход');
-  };
 
   // Функция за излизане
   const logout = async () => {
@@ -150,11 +126,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const { error } = await supabase.auth.signOut();
       if (error) {
         console.error('Грешка при излизане:', error.message);
-      } else {
-        setIsLoggedIn(false);
-        setUserName('');
-        setUserAvatar('');
-        setUser(null);
       }
     } catch (error) {
       console.error('Грешка при излизане:', error);
@@ -166,7 +137,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     userName,
     userAvatar,
     user,
-    login,
     logout,
     isLoading,
   };
