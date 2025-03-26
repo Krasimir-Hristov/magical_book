@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { BookOpen, LogIn } from 'lucide-react';
+import { BookOpen, LogIn, Pointer } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
 import { motion } from 'framer-motion';
@@ -86,21 +86,21 @@ export function Header() {
         <div className='flex items-center space-x-4'>
           {isLoggedIn ? (
             <motion.div
-              className='flex items-center'
+              className='flex items-center cursor-pointer'
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <div className='hidden sm:flex items-center mr-2'>
-                <span className='text-sm text-muted-foreground'>
-                  Добре дошъл,
-                </span>
-                <span className='ml-1 font-medium'>
-                  {getFirstName(userName)}
-                </span>
-              </div>
               <DropdownMenu>
-                <DropdownMenuTrigger className='overflow-hidden rounded-full'>
-                  <Avatar className='h-8 w-8'>
+                <DropdownMenuTrigger className='flex items-center cursor-pointer'>
+                  <div className='flex items-center mr-2'>
+                    <span className='text-xs sm:text-sm text-muted-foreground'>
+                      Добре дошъл,
+                    </span>
+                    <span className='ml-1 text-xs sm:text-sm font-medium truncate max-w-[80px] sm:max-w-none'>
+                      {getFirstName(userName)}
+                    </span>
+                  </div>
+                  <Avatar className='h-8 w-8 overflow-hidden rounded-full'>
                     <AvatarImage src={userAvatar} alt={userName} />
                     <AvatarFallback>
                       {getInitials(userName || 'User')}
