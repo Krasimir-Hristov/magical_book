@@ -215,14 +215,6 @@ export default function Home() {
                   />
                 </motion.div>
 
-                <div className='relative z-20 bg-white rounded-xl overflow-hidden shadow-2xl transform rotate-3'>
-                  <img
-                    src='/sample-book-page.webp'
-                    alt='Book Sample'
-                    className='w-full h-auto'
-                  />
-                </div>
-
                 <motion.div
                   className='absolute -bottom-4 -right-8 w-32 h-36 rounded-lg shadow-xl z-10 bg-white p-1 transform rotate-6'
                   animate={{ rotate: [6, 4, 6], y: [0, 5, 0] }}
