@@ -2,11 +2,11 @@ import { createClient } from '@supabase/supabase-js';
 
 // Тези стойности биха били реални в истинска имплементация
 // или взети от средата чрез process.env
-const supabaseUrl = 'https://your-project.supabase.co';
-const supabaseKey = 'your-anon-key';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 // Инициализация на Supabase клиент
-export const supabase = createClient(supabaseUrl, supabaseKey);
+export const supabase = createClient(supabaseUrl!, supabaseAnonKey!);
 
 // Примерни функции за автентикация
 export async function signIn(email: string, password: string) {
