@@ -11,6 +11,11 @@ const publicPaths = [
   '/how-it-works',
 ];
 
+// Fix: Use direct string literals instead of process.env
+// Replace these with your actual values, or use this workaround for TypeScript
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
 export async function middleware(request: NextRequest) {
   // Проверяваме дали пътят е публичен
   const isPublicPath = publicPaths.some(
@@ -30,32 +35,28 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          const cookie = request.cookies.get(name);
-          return cookie?.value;
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          response.cookies.set({
-            name,
-            value,
-            ...options,
-          });
-        },
-        remove(name: string, options: CookieOptions) {
-          response.cookies.set({
-            name,
-            value: '',
-            ...options,
-          });
-        },
+  const supabase = createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    cookies: {
+      get(name: string) {
+        const cookie = request.cookies.get(name);
+        return cookie?.value;
       },
-    }
-  );
+      set(name: string, value: string, options: CookieOptions) {
+        response.cookies.set({
+          name,
+          value,
+          ...options,
+        });
+      },
+      remove(name: string, options: CookieOptions) {
+        response.cookies.set({
+          name,
+          value: '',
+          ...options,
+        });
+      },
+    },
+  });
 
   const {
     data: { session },
